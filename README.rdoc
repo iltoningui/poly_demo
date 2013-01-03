@@ -5,28 +5,48 @@ This is an extremely simple demo of polymorphic associations and nested forms in
 <tt>Post</tt> and <tt>Editorial</tt>.
 
 
-== Getting Started
+== Why?
 
-1. At the command prompt, create a new Rails application:
-       <tt>rails new myapp</tt> (where <tt>myapp</tt> is the application name)
+Polymorphics associations are in some way straightforward, but the two most (deservedly) prominent intoductory texts on Rails
+(RoR Tutorial by Michael Hartl and Agile Web Development with Rails by Ruby et al.) do not cover them. The Rails
+Guides are not of much help either. Perform a web search on polymorphic associations and you will largely find
+vartions of a Railscast on the topic. The problem is that the cast deals with the case of nested resources only,
+and does address the issue of updating mutliple models with the same form. The approach that I'm using here is
+derived from the fantastic Rails Recipes: Rails 3 Edition book by Chad Fowler.
 
-2. Change directory to <tt>myapp</tt> and start the web server:
-       <tt>cd myapp; rails server</tt> (run with --help for options)
+== The short story
 
-3. Go to http://localhost:3000/ and you'll see:
-       "Welcome aboard: You're riding Ruby on Rails!"
+Pull the repository and look at the code :-).
 
-4. Follow the guidelines to start developing your application. You can find
-the following resources handy:
+== The long stroy
 
-* The Getting Started Guide: http://guides.rubyonrails.org/getting_started.html
-* Ruby on Rails Tutorial Book: http://www.railstutorial.org/
+Here's what I've done to create the demo app, and why.
+
+First, create the rails app:
+
+  rails new poly_demo
+
+Go into your new poly_demo directory and start the server:
+
+  rails server
+
+Generate two out of the box scaffolds for <tt>Post</tt> and comment <tt>Post</tt> with both have a <tt>title</tt> and <tt>content</tt>
+attribute:
+
+  rails generate scaffold Post title:string content:text
+  rails generate scaffold Editorial title:string content:text
+
+Then, generate the <tt>Comment</tt> model as follows:
+
+  rails generate model Comment content:text commentable_id:integer commentable_type:string
+
+Finally, run the migrations:
+
+  bundle exec rake db:migrate
 
 
-== Debugging Rails
 
-Sometimes your application goes wrong. Fortunately there are a lot of tools that
-will help you debug it and get it back on the rails.
+
 
 First area to check is the application log files. Have "tail -f" commands
 running on the server.log and development.log. Rails will automatically display
