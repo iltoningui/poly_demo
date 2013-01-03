@@ -7,11 +7,11 @@ This is an extremely simple demo of polymorphic associations and nested forms in
 
 == Why?
 
-Polymorphics associations are in some way straightforward, but the two most (deservedly) prominent intoductory texts on Rails
+Polymorphics associations are in some way straightforward, but the two most (deservedly) prominent introductory texts on Rails
 (RoR Tutorial by Michael Hartl and Agile Web Development with Rails by Ruby et al.) do not cover them. The Rails
 Guides are not of much help either. Perform a web search on polymorphic associations and you will largely find
-vartions of a Railscast on the topic. The problem is that the cast deals with the case of nested resources only,
-and does address the issue of updating mutliple models with the same form. The approach that I'm using here is
+variations of a Railscast on the topic. The problem is that the cast deals with the case of nested resources only,
+and does not address the issue of updating multiple models with the same form. The approach that I'm using here is
 derived from the fantastic Rails Recipes: Rails 3 Edition book by Chad Fowler.
 
 == The short story
@@ -42,7 +42,7 @@ Then, generate the <tt>Comment</tt> model as follows:
 
 This model has a <tt>content</tt> attribute, which will store the actual comment (note that the fact that this attribute is also
  called content, like the attribute in <tt>Post</tt> and <tt>Editorial</tt>, is purely coincidental and not necessary). The other two attributes,
-<tt>commentable_id</tt> and <tt>commentable_type</tt>, are needed for the polymorphic assocations. Because the
+<tt>commentable_id</tt> and <tt>commentable_type</tt>, are needed for the polymorphic associations. Because the
 <tt>Comment</tt> model belongs to many models (2 in our case), you can't just store an id for a post, or for an editorial -
 you might have posts and editorials that have the exact same id. In polymorphic associations, the combination of an id and a type
 solves this problem.
@@ -61,7 +61,7 @@ and
 
 and be able to add posts and editorials. Admittedly, this is ugly looking, but that's not our focus here.
 
-Now, let's implement the polymorphic assocations. In models/comment.rb, add
+Now, let's implement the polymorphic associations. In models/comment.rb, add
 
   belongs_to :commentable, polymorphic:true
 
