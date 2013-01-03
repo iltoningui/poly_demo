@@ -18,7 +18,7 @@ derived from the fantastic Rails Recipes: Rails 3 Edition book by Chad Fowler.
 
 Pull the repository and look at the code :-).
 
-== The long stroy
+== The long story
 
 Here's what I've done to create the demo app, and why.
 
@@ -41,7 +41,7 @@ Then, generate the <tt>Comment</tt> model as follows:
   rails generate model Comment content:text commentable_id:integer commentable_type:string
 
 This model has a <tt>content</tt> attribute, which will store the actual comment (note that the fact that this attribute is also
- called content, like the attribute in <tt>Post</tt> and <tt>Editorial</tt>, is purely coincidental and not necessary). The other two attributes,
+called content, like the attribute in <tt>Post</tt> and <tt>Editorial</tt>, is purely coincidental and not necessary). The other two attributes,
 <tt>commentable_id</tt> and <tt>commentable_type</tt>, are needed for the polymorphic associations. Because the
 <tt>Comment</tt> model belongs to many models (2 in our case), you can't just store an id for a post, or for an editorial -
 you might have posts and editorials that have the exact same id. In polymorphic associations, the combination of an id and a type
