@@ -159,11 +159,15 @@ Almost there - the point of a polymorphic association, of course, is that you wa
 just implement the corresponding changes for the <tt>Editorial</tt> model, i.e.
 
 1. Update models/editorial.rb
-2. Update views/editorials/_form.html.erb (don't forget with_blank_comment in form!)
+2. Update views/editorials/_form.html.erb (don't forget <tt>with_blank_comment</tt> in form!)
 3. Update views/editorials/index.html.erb (make sure you change post to editorial)
 4. Update views/editorials/show.html.erb (make sure you change post to editorial)
 
-That's it. A proper polymorphic association with a nested form, without a nested resource.
+That's it - you can now add comments to both posts and editorials. This is a proper polymorphic association with a
+nested form, without a nested resource.
+
+An even better version would add some jQuery sauce to the form, allowing the user to add as many comments in one go as
+she wants.
 
 
 
