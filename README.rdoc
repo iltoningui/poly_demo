@@ -88,7 +88,7 @@ the comments. To do this, add the following to models/post.rb:
                                   },
                                   allow_destroy:true
 
-The <tt>accepts_nested_attributes_for</tt> does the job - the rest of the code serves two important functions. The first
+The <tt>accepts_nested_attributes_for</tt> does the job - the rest of the code serves two other equally important functions. The first
 part ensures that we are not storing blank comments; the second part ensures that we can delete comments.
 
 Now, let's update the form. In views/posts/_form.html.erb, you have a line
@@ -99,8 +99,8 @@ Change this to
 
   <%= form_for(@post.with_blank_comment) do |f| %>
 
-This will call a method (which will have to generate) that will make sure that a comment is built - otherwise the form
-elements for comments will not be shown.
+This will call a method (which will have to generate below) that will make sure that a comment is built - otherwise the form
+element for a new comment will not be shown.
 
 In the same file, right before the submit button, add
 
@@ -114,7 +114,7 @@ In the same file, right before the submit button, add
         </div>
     <% end %>
 
-This renders the form element for the comment, and further ensures that there is a checkbox to delete the comment.
+This renders the form elements for the comments, and further ensures that there is a checkbox to delete already existing comments.
 
 Now, let's not forget to create the <tt>with_blank_comment</tt> method. In models/post.rb, add
 
@@ -123,8 +123,8 @@ Now, let's not forget to create the <tt>with_blank_comment</tt> method. In model
     self
   end
 
-Ok, this should allow us to create (and update / delete) comments. Go ahead and try it out - you won't see the comments,
-because we haven't implemented the show and index views, but you can verify that the comments are created, updated and
+With what we have so far, we should be able to create (and update / delete) comments. Go ahead and try it out - you won't see the comments,
+because we haven't implemented the show and index views yet, but you can verify that the comments are created, updated and
 deleted through the console:
 
   rails console
@@ -134,6 +134,26 @@ Notice that each comment has an <tt>id</tt> attribute (its unique identifier) as
 <tt>commentable_type</tt> attribute. The <tt>commentable_id</tt> is the id of the corresponding <tt>Post</tt>, and the
 <tt>commentable_type</tt> should be Post.
 
+In order to show the comments, we need to modify two more files. First, in views/posts/show.html.erb, add
+
+  <% if @post.comments.any? %>
+    <% @post.comments.each do |comment| %>
+      <p>
+        <b>Comment:</b>
+        <%= comment.content %>
+      </p>
+    <% end %>
+  <% end %>
+
+right after the post title and content. Finally, in views/posts/index.html.erb, add
+
+  <% if post.comments.any? %>
+    <tr><td colspan="5">
+      (<%= pluralize(post.comments.count, "comment") %>)
+    </td></tr>
+  <% end %>
+
+after the last <tt></tr></tt> tag.
 
 
 
