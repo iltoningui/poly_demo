@@ -30,7 +30,7 @@ Go into your new poly_demo directory and start the server:
 
   rails server
 
-Generate two out of the box scaffolds for <tt>Post</tt> and comment <tt>Post</tt> with both have a <tt>title</tt> and <tt>content</tt>
+Generate two out of the box scaffolds for <tt>Post</tt> and <tt>Editorial</tt> which both have a <tt>title</tt> and <tt>content</tt>
 attribute:
 
   rails generate scaffold Post title:string content:text
@@ -40,9 +40,42 @@ Then, generate the <tt>Comment</tt> model as follows:
 
   rails generate model Comment content:text commentable_id:integer commentable_type:string
 
+This model has a <tt>content</tt> attribute, which will store the actual comment. The other two attributs,
+<tt>commentable_id</tt> and  <tt>commentable_type</tt>, are needed for the polymorphic assocations. Because the
+<tt>Comment</tt> model belongs to many models (2 in our case), you can't just store an id for a post, or for an editorial -
+you might have posts and editorials that have the exact same id. In polymorphic associations, the combination of an id and a type
+solves this problem.
+
 Finally, run the migrations:
 
   bundle exec rake db:migrate
+
+With that, you should now be able to point your app to
+
+  /posts
+
+and
+
+  /editorials
+
+And be able to add posts and comments. Admittedly, this is ugly looking, but that's not our focus here.
+
+Now, let's implement the polymorphic assocations. In models/comment.rb, add
+
+  belongs_to :commentable, polymorphic:true
+
+In models/post.rb, add <tt>:comments</tt> and <tt>:comments_attributes</tt> to the list of <tt>attr_accessible</tt>. Further,
+add the line
+
+  has_many :comments, :as => :commentable, dependent: :destroy
+
+(We'll skip the editorial model for now).
+
+What this does is it associates <tt>Comment</tt> to <tt>Post</tt> through the association <tt>:commentable</tt> (you can
+name the association whatever you want). We also want comments to be deleted when a post is deleted, hence the destroy
+dependence.
+
+You now have a polymorphic association, but 1) how do you CRUD (create read update delete) comments belonging to post?
 
 
 
