@@ -88,7 +88,7 @@ the comments. To do this, add the following to models/post.rb:
                                   },
                                   allow_destroy:true
 
-The <tt>accepts_nested_attributes_for</tt> does the job - the rest of the code serves two other equally important functions. The first
+The <tt>accepts_nested_attributes_for</tt> allows the nesting of attributes - the rest of the code serves two other equally important functions. The first
 part ensures that we are not storing blank comments; the second part ensures that we can delete comments.
 
 Now, let's update the form. In views/posts/_form.html.erb, you have a line
