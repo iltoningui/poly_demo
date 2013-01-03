@@ -70,7 +70,7 @@ add the line
 
   has_many :comments, :as => :commentable, dependent: :destroy
 
-(We'll skip the editorial model for now).
+(We'll skip the <tt>Editorial</tt> model for now).
 
 What this does is it associates <tt>Comment</tt> to <tt>Post</tt> through the association <tt>:commentable</tt> (you can
 name the association whatever you want). We also want comments to be deleted when a post is deleted, hence the destroy
